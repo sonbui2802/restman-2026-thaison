@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+ <modelVersion>4.0.0</modelVersion>
+ <groupId>vn.restman</groupId><artifactId>restman6</artifactId><version>1.0.0</version><packaging>war</packaging>
+ <properties>
+  <maven.compiler.release>11</maven.compiler.release>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <tomcat.home>${project.basedir}/.tools/apache-tomcat-9.0.98</tomcat.home>
+  <http.port>8080</http.port>
+ </properties>
+ <dependencies>
+  <dependency><groupId>com.mysql</groupId><artifactId>mysql-connector-j</artifactId><version>8.4.0</version></dependency>
+  <dependency><groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId><version>4.0.1</version><scope>provided</scope></dependency>
+  <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter</artifactId><version>5.11.4</version><scope>test</scope></dependency>
+ </dependencies>
+ <build><finalName>restman6</finalName><plugins>
+  <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.13.0</version></plugin>
+  <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-war-plugin</artifactId><version>3.4.0</version></plugin>
+  <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.5.2</version></plugin>
+  <!-- Starts the installed Tomcat; application code stays model / dao / JSP. -->
+  <plugin>
+   <groupId>org.codehaus.cargo</groupId><artifactId>cargo-maven3-plugin</artifactId><version>1.10.16</version>
+   <configuration>
+    <container><containerId>tomcat9x</containerId><type>installed</type><home>${tomcat.home}</home></container>
+    <configuration>
+     <type>standalone</type><home>${project.basedir}/.runtime/intellij-tomcat</home>
+     <properties><cargo.servlet.port>${http.port}</cargo.servlet.port><cargo.hostname>127.0.0.1</cargo.hostname></properties>
+    </configuration>
+    <deployables><deployable>
+     <groupId>${project.groupId}</groupId><artifactId>${project.artifactId}</artifactId><type>war</type>
+     <properties><context>restman6</context></properties>
+    </deployable></deployables>
+   </configuration>
+  </plugin>
+ </plugins></build>
+</project>
+

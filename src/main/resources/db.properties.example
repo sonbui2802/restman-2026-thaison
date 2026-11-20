@@ -1,0 +1,5 @@
+# Copy this file to db.properties, then enter your local MySQL credentials.
+# This is the MySQL login, NOT the managerson/customer6 web account.
+db.url=jdbc:mysql://localhost:3306/restman?useUnicode=true&characterEncoding=UTF-8&connectionTimeZone=Asia/Ho_Chi_Minh
+db.username=restman
+db.password=YOUR_MYSQL_PASSWORD

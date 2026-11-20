@@ -1,0 +1,9 @@
+<%@ include file="common6.jspf" %>
+<%
+if (member6 == null) { response.sendRedirect(request.getContextPath()+"/view/Login6.jsp"); return; }
+if (!(member6 instanceof Customer6) || !"CUSTOMER".equals(member6.getRole())) {
+    response.setStatus(403); out.print("Bạn không có quyền truy cập trang khách hàng."); return;
+}
+Customer6 customer = (Customer6) member6;
+%>
+

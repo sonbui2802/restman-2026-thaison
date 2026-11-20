@@ -1,0 +1,32 @@
+<%@ page import="model.*,dao.*,java.sql.SQLException,java.time.*,java.time.format.*,java.util.*" %>
+<%!
+private String h(Object value) {
+    if (value == null) return "";
+    return value.toString().replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
+        .replace("\"","&quot;").replace("'","&#39;");
+}
+private String text(javax.servlet.http.HttpServletRequest request, String name) {
+    String value = request.getParameter(name);
+    return value == null ? "" : value.trim();
+}
+private boolean validCsrf(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpSession session) {
+    return session.getAttribute("csrf6") != null && session.getAttribute("csrf6").equals(request.getParameter("csrf6"));
+}
+private String bounded(String value, String label, int max, boolean required) {
+    if ((required && value.isBlank()) || value.length() > max)
+        throw new IllegalArgumentException(label + (value.isBlank() ? " không được để trống." : " dài quá " + max + " ký tự."));
+    return value;
+}
+private static final DateTimeFormatter DATE6 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+private static final DateTimeFormatter TIME6 = DateTimeFormatter.ofPattern("HH:mm");
+%>
+<%
+request.setCharacterEncoding("UTF-8");
+response.setHeader("Cache-Control","no-store");
+response.setHeader("X-Content-Type-Options","nosniff");
+response.setHeader("X-Frame-Options","DENY");
+if (session.getAttribute("csrf6") == null) session.setAttribute("csrf6", UUID.randomUUID().toString());
+Member6 member6 = (Member6) session.getAttribute("member6");
+String error6 = "";
+%>
+
